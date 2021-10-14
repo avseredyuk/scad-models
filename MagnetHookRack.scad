@@ -9,18 +9,19 @@ magW = 15;
 magH = 5;
 wallW = 3;
 tubeR = 4;
+boltRadius = 2;
+boltHeadRadius = 3;
 
 // Selected module call
 //hook(tubeR);
-//upperConnector(magW, magH, wallW, tubeR);
-lowerConnector(magW, magH, wallW, tubeR);
+upperConnector(magW, magH, wallW, tubeR);
+//lowerConnector(magW, magH, wallW, tubeR);
 
 module lowerConnector(magnetWidth, magnetHeight, magnetWall, tubeRadius) {
     difference() {
         tubeShellW = 3;
         tubeHoleL = 10;
         magThinWallH = 1;
-        threadHoleR = 1;
         hullShapeHeight = 1;
         magWithDoubleWall = magnetWidth + magnetWall * 2;
         tubeWithShell = tubeRadius + tubeShellW;
@@ -57,30 +58,48 @@ module lowerConnector(magnetWidth, magnetHeight, magnetWall, tubeRadius) {
             rotate([0, 90, 0])  {
                 cylinder(r=tubeRadius + D, h=tubeHoleL);
             };
-        // thread hole #1
-        translate([magnetWall+magnetWidth/2, (magWithDoubleWall)/2, tubeWithShell])
-            rotate([0, 90, 0])  {
-                cylinder(r=threadHoleR, h=magWithDoubleWall + tubeHoleL - magnetWall - magnetWidth/2);
-            };
             
         // tube hole #2
         translate([(magWithDoubleWall)/2, magWithDoubleWall, tubeWithShell])
             rotate([-90, 0, 0])  {
                 cylinder(r=tubeRadius + D, h=tubeHoleL);
             };
-        // thread hole #2
-        translate([magWithDoubleWall/2, magnetWall + magnetWidth/2, tubeWithShell])
-            rotate([-90, 0, 0])  {
-                cylinder(r=threadHoleR, h=magWithDoubleWall + tubeHoleL - magnetWall - magnetWidth/2);
-            };
+            
+        // bolt hole #1
+        translate([magWithDoubleWall + tubeHoleL/2, 0, tubeWithShell]) 
+            rotate([-90, 0, 0]) {
+                cylinder(r=boltRadius, h=1000);
+            }
+        // bolt header holes #1
+        translate([magWithDoubleWall + tubeHoleL/2, 0, tubeWithShell]) 
+            rotate([-90, 0, 0]) {
+                cylinder(r=boltHeadRadius, h=3);
+            }
+        translate([magWithDoubleWall + tubeHoleL/2, magWithDoubleWall + tubeHoleL, tubeWithShell]) 
+            rotate([90, 0, 0]) {
+                cylinder(r=boltHeadRadius, h=12);
+            }
+        // bolt hole #2
+        translate([0, magWithDoubleWall + tubeHoleL/2, tubeWithShell]) 
+            rotate([0, 90, 0]) {
+                cylinder(r=boltRadius, h=1000);
+            }
+        // bolt header holes #2
+        translate([0, magWithDoubleWall + tubeHoleL/2, tubeWithShell]) 
+            rotate([0, 90, 0]) {
+                cylinder(r=boltHeadRadius, h=3);
+            }
+        translate([magWithDoubleWall + tubeHoleL, magWithDoubleWall + tubeHoleL/2, tubeWithShell]) 
+            rotate([0, -90, 0]) {
+                cylinder(r=boltHeadRadius, h=12);
+            }
     }
 }
 
 module upperConnector(magnetWidth, magnetHeight, magnetWall, tubeRadius) {
     tubeShellW = 3;
-    tubeHoleL = 10;
+    tubeHoleL = 15;
     magThinWallH = 1;
-    threadHoleR = 1;
     magWithDoubleWall = magnetWidth + magnetWall * 2;
     tubeWithShell = tubeRadius + tubeShellW;
     
@@ -112,21 +131,43 @@ module upperConnector(magnetWidth, magnetHeight, magnetWall, tubeRadius) {
         translate([magWithDoubleWall + tubeWithShell, tubeWithShell + (magWithDoubleWall-tubeWithShell)/2, 0 -  
                     tubeHoleL - tubeWithShell])
             cylinder(r=tubeRadius + D, h=tubeHoleL);
-        // thread hole #1
-        translate([magWithDoubleWall + tubeWithShell, tubeWithShell + (magWithDoubleWall-tubeWithShell)/2, 0 -  
-                    tubeHoleL - tubeWithShell])
-            cylinder(r=threadHoleR, h=tubeHoleL + tubeRadius);
-        
         // tube hole #2
         translate([magWithDoubleWall + tubeWithShell, tubeWithShell - magnetWall, - tubeRadius])
             rotate([90, 0, 0])  {
                 cylinder(r=tubeRadius + D, h=tubeHoleL);
             }
-        // thread hole #2
-        translate([magWithDoubleWall + tubeWithShell, tubeWithShell + tubeRadius + magnetWall, - tubeRadius])
-            rotate([90, 0, 0])  {
-                cylinder(r=threadHoleR + D, h=tubeHoleL + tubeRadius);
+
+        // bolt hole #1
+        translate([magWithDoubleWall + tubeWithShell, magWithDoubleWall, 0 - tubeHoleL/2 - tubeWithShell]) 
+            rotate([90, 0, 0]) {
+                cylinder(r=boltRadius, h=1000);
             }
+            
+        // bolt header holes #1
+        translate([magWithDoubleWall + tubeWithShell, magWithDoubleWall, 0 - tubeHoleL/2 - tubeWithShell]) 
+            rotate([90, 0, 0]) {
+                cylinder(r=boltHeadRadius, h=1.5);
+            }
+        translate([magWithDoubleWall + tubeWithShell, 
+            tubeWithShell - magnetWall, 0 - tubeHoleL/2 - tubeWithShell]) 
+            rotate([90, 0, 0]) {
+                cylinder(r=boltHeadRadius, h=1000);
+            }
+
+        // bolt hole #2
+        translate([magWithDoubleWall + tubeWithShell, tubeWithShell - magnetWall - tubeHoleL/2, magH + wallW + magThinWallH]) 
+            rotate([0, 180, 0]) {
+                cylinder(r=boltRadius, h=1000);
+            }
+            
+        // bolt header holes #2
+        translate([magWithDoubleWall + tubeWithShell, tubeWithShell - magnetWall - tubeHoleL/2, magH + wallW + magThinWallH]) 
+            rotate([0, 180, 0]) {
+                cylinder(r=boltHeadRadius, h=7);
+            }
+        translate([magWithDoubleWall + tubeWithShell, tubeWithShell - magnetWall - tubeHoleL/2, 0 - tubeHoleL - tubeWithShell]) 
+            cylinder(r=boltHeadRadius, h=12);
+            
     }
 }
 
