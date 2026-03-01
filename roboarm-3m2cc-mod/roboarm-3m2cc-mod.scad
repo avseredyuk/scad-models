@@ -65,10 +65,10 @@ module cutout() {
                     linear_extrude(height = 3) 
                         polygon(points = [[52,10], [23,3], [23,29], [52,21]]);
     
-        translate([70,-25,-15])
+        translate([72,-25,-15])
             cube([10,40,40]);
             
-        translate([105,-25,-15])
+        translate([104,-25,-15])
             cube([10,40,40]);
 
     }
