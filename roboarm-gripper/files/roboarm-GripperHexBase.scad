@@ -14,12 +14,12 @@ module main() {
         }
     
         color("green")
-            translate([-7.5,-18,-32.5])
-                cube([15, 24, 21.4]);
+            translate([-7.5,-17.5,-32.5])
+                cube([15, 23, 21.4]);
                 
         color("purple")
-            translate([-3,0,-32.5])
-                cube([6, 20, 15]);
+            translate([-3,-60,-32.5])
+                cube([6, 120, 15]);
     }
     
 
