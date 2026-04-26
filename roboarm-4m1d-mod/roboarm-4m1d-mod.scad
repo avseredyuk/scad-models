@@ -22,10 +22,6 @@ module main() {
                     
           
         }
-        //translate([35,45,0])
-        //    color("green") cylinder(h=50,d=8);
-        //translate([35,45,4])
-        //    color("blue") cylinder(h=16,d=22.35);
         translate([35,45,0])
             color("blue") cylinder(h=0.5,d=20.25);
             
